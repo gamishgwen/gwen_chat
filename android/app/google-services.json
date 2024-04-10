@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "155486872657",
+    "project_id": "gwen-chat",
+    "storage_bucket": "gwen-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155486872657:android:f68833bb43cbc853a9c470",
+        "android_client_info": {
+          "package_name": "com.example.gwen_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDak4YW5HJ4R6eZI54jcfohpL6ypQ_eehE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
