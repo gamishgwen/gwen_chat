@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'User.dart';
 import 'firebase_options.dart';
-import 'login_screen.dart';
+import 'chat_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

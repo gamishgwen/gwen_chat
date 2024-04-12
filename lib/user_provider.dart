@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gwen_chat/User.dart';
 
 class UserProvider with ChangeNotifier{
-  late final UserDetails? currentUser;
+  late UserDetails? currentUser;
 
   Future<void> fetchCurrentUser(String userId) async{
     final userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();

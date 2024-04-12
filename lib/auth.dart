@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gwen_chat/User.dart';
-import 'package:gwen_chat/login_screen.dart';
+import 'package:gwen_chat/chat_page.dart';
 import 'package:gwen_chat/user_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
