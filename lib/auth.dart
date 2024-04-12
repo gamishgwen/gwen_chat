@@ -48,11 +48,6 @@ class _AuthScreenState extends State<AuthScreen> {
         ); final userId= credential.user?.uid;
        UserDetails user=  UserDetails(userId!, enteredUserName, enteredEmail, url);
        await FirebaseFirestore.instance.collection('users').doc(userId!).set(user.toJson());
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) {
-            return ChatScreen();
-          },
-        ));
         print(credential);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -73,11 +68,6 @@ class _AuthScreenState extends State<AuthScreen> {
         final credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: enteredEmail, password: enteredPassword);
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) {
-            return ChatScreen();
-          },
-        ));
         print(credential);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
