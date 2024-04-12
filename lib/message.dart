@@ -37,4 +37,9 @@ class Message {
         message: map['message'],
         time: (map['time'] as Timestamp).toDate());
   }
+
+  @override
+  String toString() {
+    return 'Message{senderUserName: $senderUserName, message: $message}';
+  }
 }

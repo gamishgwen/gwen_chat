@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gwen_chat/User.dart';
 import 'package:gwen_chat/message.dart';
+import 'package:gwen_chat/message_set.dart';
 import 'package:gwen_chat/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   var message = TextEditingController();
+
 
   void dispose() {
     message.dispose();
@@ -73,29 +75,29 @@ class _ChatScreenState extends State<ChatScreen> {
                     ..sort(
                       (a, b) => a.time.compareTo(b.time),
                     );
+
+                  List<List<Message>> messageList = [];
+                  for (final message in messages) {
+                    if (messageList.isEmpty) {
+                      messageList.add([message]);
+                    } else {
+                      if (messageList.last.first.senderId ==
+                          message.senderId) {
+                        messageList.last.add(message);
+                      } else {
+                        messageList.add([message]);
+                      }
+                    }
+                  }
+
+                  for(final messages in messageList) {
+                    print(messages);
+                  }
+                  // print(messageList);
+
                   return ListView.builder(
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) => Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(messages[index].senderImage),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          children: [
-                            Card(
-                              child: Text(messages[index].message),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    itemCount: messageList.length,
+                    itemBuilder: (context, index) => MessageSet(messages: messageList[index])
                   );
                 }),
           ),
