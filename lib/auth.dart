@@ -3,15 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gwen_chat/User.dart';
-import 'package:gwen_chat/chat_page.dart';
 import 'package:gwen_chat/user_image.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
-
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -26,8 +23,8 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _isLogin = true;
   File? selectedImage;
 
-  void updateImage(File updatedFile){
-    selectedImage= updatedFile;
+  void updateImage(File updatedFile) {
+    selectedImage = updatedFile;
   }
 
   Future<void> signUp() async {
@@ -36,18 +33,23 @@ class _AuthScreenState extends State<AuthScreen> {
 
       try {
         final storageRef = FirebaseStorage.instance.ref();
-        final profilepicRef = storageRef.child("profile_pics/${path.basename(selectedImage!.path)}");
+        final profilepicRef = storageRef
+            .child("profile_pics/${path.basename(selectedImage!.path)}");
         await profilepicRef.putFile(selectedImage!);
-        final url= await profilepicRef.getDownloadURL();
+        final url = await profilepicRef.getDownloadURL();
 
         final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: enteredEmail,
           password: enteredPassword,
-
-        ); final userId= credential.user?.uid;
-       UserDetails user=  UserDetails(userId!, enteredUserName, enteredEmail, url);
-       await FirebaseFirestore.instance.collection('users').doc(userId!).set(user.toJson());
+        );
+        final userId = credential.user?.uid;
+        UserDetails user =
+            UserDetails(userId!, enteredUserName, enteredEmail, url);
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId!)
+            .set(user.toJson());
         print(credential);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -87,25 +89,25 @@ class _AuthScreenState extends State<AuthScreen> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(right: 20, left: 20, top: 30),
+              margin: const EdgeInsets.only(right: 20, left: 20, top: 30),
               width: 200,
-              child: Icon(
-                Icons.chat,
-                size: 160,
-              ),
+              child: const Icon(Icons.chat, size: 160),
             ),
             Card(
-              margin: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       children: [
-                        if (!_isLogin) UserImage(onUpdateImage:updateImage ,),
+                        if (!_isLogin)
+                          UserImage(
+                            onUpdateImage: updateImage,
+                          ),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             label: Text('Email Address'),
                           ),
                           validator: (value) {
@@ -122,7 +124,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         if (!_isLogin)
                           TextFormField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               label: Text('User Name'),
                             ),
                             validator: (value) {
@@ -136,7 +138,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             },
                           ),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             label: Text('Password'),
                           ),
                           validator: (value) {
@@ -149,27 +151,23 @@ class _AuthScreenState extends State<AuthScreen> {
                             enteredPassword = newValue!;
                           },
                         ),
-                        SizedBox(
-                          height: 12,
-                        ),
+                        const SizedBox(height: 12),
                         ElevatedButton(
-                            onPressed: () async{
+                            onPressed: () async {
                               setState(() {
-                                _isLoading=true;
+                                _isLoading = true;
                               });
 
-                             _isLogin ? await login() : await signUp();
-                             setState(() {
-                               _isLoading=false;
-                             });
-
-
+                              _isLogin ? await login() : await signUp();
+                              setState(() {
+                                _isLoading = false;
+                              });
                             },
                             child: SizedBox(
                                 width: 100,
                                 child: Center(
                                     child: _isLoading
-                                        ? CircularProgressIndicator()
+                                        ? const CircularProgressIndicator()
                                         : Text(
                                             _isLogin ? 'Login' : 'sign up')))),
                         TextButton(
